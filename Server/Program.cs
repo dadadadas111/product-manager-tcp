@@ -26,6 +26,7 @@ namespace Server
                     var client = new Client(_listener.AcceptTcpClient());
                     _clients.Add(client);
                     BroadcastConnections();
+                    BroadcastMessages("[Server]", $"{client.Name} has connected.");
                 }
             }
             catch (Exception ex)
@@ -90,7 +91,7 @@ namespace Server
             }
 
             //_logger?.Warning($"Client disconnected. Uid: {uid}, Name: {disconnectedClient.Name}");
-
+            BroadcastMessages("[Server]", $"{disconnectedClient.Name} has disconnected.");
             BroadcastConnections();
         }
     }

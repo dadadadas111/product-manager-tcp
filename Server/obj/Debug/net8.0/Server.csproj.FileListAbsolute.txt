@@ -12,3 +12,4 @@ D:\learning_material\PRN222\ProductManagementApp\Server\obj\Debug\net8.0\refint\
 D:\learning_material\PRN222\ProductManagementApp\Server\obj\Debug\net8.0\Server.pdb
 D:\learning_material\PRN222\ProductManagementApp\Server\obj\Debug\net8.0\Server.genruntimeconfig.cache
 D:\learning_material\PRN222\ProductManagementApp\Server\obj\Debug\net8.0\ref\Server.dll
+D:\learning_material\PRN222\ProductManagementApp\Server\obj\Debug\net8.0\Server.sourcelink.json

@@ -7,16 +7,19 @@
         xmlns:viewmodel="clr-namespace:Client.MVVM.ViewModel"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="MainWindow" Height="474" Width="816">
+        Title="MainWindow" Height="600" Width="1000">
 
     <Window.DataContext>
         <viewmodel:MainViewModel/>
     </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="250" MinWidth="250" MaxWidth="500"/>
+            <ColumnDefinition Width="5" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
+
+        <!-- Left panel remains unchanged -->
         <DockPanel>
             <TextBox Height="25"
                      DockPanel.Dock="Top"
@@ -25,26 +28,81 @@
                     DockPanel.Dock="Top"
                     Content="Connect" 
                     Command="{Binding ConnectToServerCommand}"/>
-            <ListView ItemsSource="{Binding Users }">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Username}"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </DockPanel>
-        <StackPanel Grid.Column="1">
-            <ListView Height="380"
-                      ItemsSource="{Binding Messages}"/>
-            <StackPanel Orientation="Horizontal">
-                <TextBox Height="55"
-                         Width="545"
+            <Grid VerticalAlignment="Bottom" Height="500">
+                <Border BorderBrush="Gray" BorderThickness="1" Background="LightGray" CornerRadius="5">
+                    <StackPanel>
+                        <ListView Height="200" ItemsSource="{Binding Users }">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Username}"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <ListView Height="275" MaxWidth="500" ItemsSource="{Binding Messages}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock MaxWidth="250" Text="{Binding}" TextWrapping="Wrap"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox 
+                                Width="200"
                          Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}"
                          VerticalContentAlignment="Center"/>
-                <Button Width="55"
+                            <Button 
+                                MinWidth="55"
                         Content="Send"
                         Command="{Binding SendToServerCommand}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </DockPanel>
+
+        <!-- GridSplitter -->
+        <GridSplitter Grid.Column="1"
+                  Width="5"
+                  Background="Gray"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  ResizeBehavior="PreviousAndNext"/>
+
+        <!-- Center panel with placeholders -->
+        <StackPanel Grid.Column="2" Margin="10">
+            <!-- Category Selector -->
+            <ComboBox Height="30" Width="200" Margin="0,0,0,10"
+                      />
+
+            <!-- Product List -->
+            <ListView Height="200" Margin="0,0,0,10">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Product Name" Width="200"/>
+                        <GridViewColumn Header="Price" Width="100"/>
+                        <GridViewColumn Header="Stock" Width="100"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <!-- Product Form -->
+            <StackPanel Margin="0,0,0,10">
+                <TextBlock Text="Product Name:"/>
+                <TextBox Height="25" Width="300" Margin="0,5,0,10"/>
+                <TextBlock Text="Price:"/>
+                <TextBox Height="25" Width="300" Margin="0,5,0,10"/>
+                <TextBlock Text="Stock:"/>
+                <TextBox Height="25" Width="300"/>
+            </StackPanel>
+
+            <!-- Action Buttons -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,10,0,0">
+                <Button Content="Add" Width="75" Margin="5"/>
+                <Button Content="Edit" Width="75" Margin="5"/>
+                <Button Content="Delete" Width="75" Margin="5"/>
             </StackPanel>
         </StackPanel>
+
+
     </Grid>
 </Window>
