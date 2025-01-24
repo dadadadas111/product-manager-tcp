@@ -35,7 +35,7 @@ namespace Server
             }
         }
 
-        static void BroadcastConnections()
+        public static void BroadcastConnections()
         {
             if (_clients == null)
                 return;
@@ -72,6 +72,7 @@ namespace Server
 
         public static void BroadcastDisconnect(string uid)
         {
+            Console.WriteLine("Broadcasting disconnect");
             if (_clients == null)
                 return;
 
@@ -91,8 +92,8 @@ namespace Server
             }
 
             //_logger?.Warning($"Client disconnected. Uid: {uid}, Name: {disconnectedClient.Name}");
-            BroadcastMessages("[Server]", $"{disconnectedClient.Name} has disconnected.");
-            BroadcastConnections();
+            //BroadcastMessages("[Server]", $"{disconnectedClient.Name} has disconnected.");
+            //BroadcastConnections();
         }
     }
 }

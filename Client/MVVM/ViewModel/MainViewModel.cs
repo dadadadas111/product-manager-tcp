@@ -21,6 +21,10 @@ namespace Client.MVVM.ViewModel
         {
             Users = new ObservableCollection<UserModel>();
             Messages = new ObservableCollection<string>();
+
+            Users.Add(new UserModel("Currently Onlines: ", "1234"));
+            Messages.Add("Chat:");
+
             _server = new Server();
             _server.OnUserConnect += UserConnected;
             _server.OnReceiveMessage += MessageReceived;

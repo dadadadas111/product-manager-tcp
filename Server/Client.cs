@@ -1,11 +1,6 @@
 ﻿using Client.Net.IO;
 using Server.Net.IO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Server
 {
@@ -68,6 +63,8 @@ namespace Server
             {
                 _logger?.Warning($"Client disconnected. Uid: {Uid.ToString()}, Name: {Name}");
                 Program.BroadcastDisconnect(Uid.ToString());
+                Program.BroadcastMessages("[Server]", $"{Name} has disconnected.");
+                Program.BroadcastConnections();
                 ClientSocket.Close();
             }
         }
