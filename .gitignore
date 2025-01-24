@@ -1,0 +1,58 @@
+# Ignore build output and intermediate files
+Client/bin/
+Client/obj/
+Server/bin/
+Server/obj/
+
+# Visual Studio-related files and folders
+.vs/
+*.user
+*.suo
+*.vcxproj.user
+*.psess
+*.vspxproj.user
+
+# NuGet packages
+packages/
+*.nupkg
+*.snupkg
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Build logs
+*.log
+
+# Debug and release configuration files
+*.cache
+*.pdb
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+*.dmp
+
+# Resharper and Rider folders
+_ReSharper*/
+*.DotSettings.user
+
+# IDE settings
+.idea/
+*.sln.iml
+
+# Test results
+TestResults/
+
+# Generated files
+Generated/
+*.g.*
+*.i.*
+
+# Local settings
+Client/appsettings.Local.json
+Server/appsettings.Local.json
+
+# Additional personal or system files
+Thumbs.db
+.DS_Store
