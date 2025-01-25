@@ -66,7 +66,7 @@ namespace Client.Net
                     var opCode = PackageReader!.ReadByte();
                     switch ((OpCode)opCode)
                     {
-                        case OpCode.UserJoined:
+                        case OpCode.UserOnline:
                             OnUserConnect?.Invoke();
                             break;
                         case OpCode.ReceiveMessage:

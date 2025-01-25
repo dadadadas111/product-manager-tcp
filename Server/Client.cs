@@ -47,9 +47,6 @@ namespace Server
                             _logger.Log($"Received message from {sender}: {message}");
                             Program.BroadcastMessages(sender, message);
                             break;
-                        case (byte)OpCode.Ping:
-                            _logger.Log("Received ping.");
-                            break;
                         case (byte)OpCode.Disconnect:
                             _logger.Log("Client disconnected.");
                             break;
@@ -59,7 +56,7 @@ namespace Server
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 _logger?.Warning($"Client disconnected. Uid: {Uid.ToString()}, Name: {Name}");
                 Program.BroadcastDisconnect(Uid.ToString());

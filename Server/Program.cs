@@ -27,13 +27,11 @@ namespace Server
                 })
                 .ConfigureServices((context, services) =>
                 {
-                    // Register ApplicationDbContext with the connection string
                     services.AddDbContext<ApplicationDbContext>(options =>
                         options.UseSqlServer(context.Configuration.GetConnectionString("DefaultConnection")));
                 })
                 .Build();
 
-            // Dependency injection is now set up
             var dbContext = host.Services.GetRequiredService<ApplicationDbContext>();
 
             dbContext.Database.Migrate();
@@ -80,7 +78,7 @@ namespace Server
                 foreach (var clientToSend in _clients)
                 {
                     var broadcastPackage = new PackageBuilder();
-                    broadcastPackage.WriteOpCode((byte)OpCode.UserJoined);
+                    broadcastPackage.WriteOpCode((byte)OpCode.UserOnline);
                     if (client.Name == null)
                         continue;
                     broadcastPackage.WriteString(client.Name);

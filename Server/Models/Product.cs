@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Server.Models
 {
@@ -14,6 +10,15 @@ namespace Server.Models
         public int Stock { get; set; }
 
         public Guid CategoryId { get; set; }
-        public Category Category { get; set; }
+        public Category? Category { get; set; }
+
+        public Product(string name, decimal price, int stock, Guid categoryId)
+        {
+            Id = Guid.NewGuid();
+            Name = name;
+            Price = price;
+            Stock = stock;
+            CategoryId = categoryId;
+        }
     }
 }
