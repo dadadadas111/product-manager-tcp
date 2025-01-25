@@ -2,13 +2,13 @@
 
 namespace Server
 {
-    internal class Logger
+    internal class CustomLogger
     {
         public string Context { get; }
 
-        public Logger() : this("Server") { }
+        public CustomLogger() : this("Server") { }
 
-        public Logger(string context)
+        public CustomLogger(string context)
         {
             Context = context ?? throw new ArgumentNullException(nameof(context));
         }
@@ -16,6 +16,10 @@ namespace Server
         public void Log(string message) => Log(message, Context, ConsoleColor.Blue);
 
         public void Log(string message, string context) => Log(message, context, ConsoleColor.Blue);
+
+        public void Success(string message) => Log(message, Context, ConsoleColor.Green);
+
+        public void Success(string message, string context) => Log(message, context, ConsoleColor.Green);
 
         public void Error(string message) => Log(message, Context, ConsoleColor.Red);
 

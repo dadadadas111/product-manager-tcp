@@ -10,12 +10,12 @@ namespace Server
         public Guid Uid { get; set; }
         public TcpClient ClientSocket { get; set; }
 
-        Logger _logger;
+        CustomLogger _logger;
         PackageReader? _packageReader;
 
         public Client(TcpClient clientSocket)
         {
-            _logger = new Logger("Client");
+            _logger = new CustomLogger("Client");
 
             ClientSocket = clientSocket;
             Uid = Guid.NewGuid();

@@ -1,25 +1,53 @@
 ﻿using Client.Net.IO;
+using Server.Data;
 using Server.Net.IO;
 using System.Net;
 using System.Net.Sockets;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Server
 {
     class Program
     {
         static TcpListener? _listener;
-        static Logger? _logger;
+        static CustomLogger? _logger;
         static List<Client>? _clients;
 
         static void Main(string[] args)
         {
-            _logger = new Logger("Server");
+            _logger = new CustomLogger("Server");
+
+            var host = Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((context, config) =>
+                {
+                    config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+                })
+                .ConfigureServices((context, services) =>
+                {
+                    // Register ApplicationDbContext with the connection string
+                    services.AddDbContext<ApplicationDbContext>(options =>
+                        options.UseSqlServer(context.Configuration.GetConnectionString("DefaultConnection")));
+                })
+                .Build();
+
+            // Dependency injection is now set up
+            var dbContext = host.Services.GetRequiredService<ApplicationDbContext>();
+
+            dbContext.Database.Migrate();
+
+            _logger.Success("Database migration complete.");
 
             try
             {
                 _clients = new List<Client>();
                 _listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 3000);
                 _listener.Start();
+
+                _logger.Success("TCP listener started.");
+                _logger.Warning("Waiting for connections...");
 
                 while (true)
                 {
@@ -32,6 +60,13 @@ namespace Server
             catch (Exception ex)
             {
                 _logger.Error(ex.Message);
+            }
+            finally
+            {
+                _listener?.Stop();
+                _listener?.Dispose();
+                _listener = null;
+                _logger?.Warning("TCP listener stopped.");
             }
         }
 
