@@ -24,7 +24,7 @@ namespace Client.Net
         {
             if (_client.Connected)
                 return;
-
+            _client = new TcpClient();
             _client.Connect(ip, port);
             _stream = _client.GetStream();
             PackageReader = new PackageReader(_stream);
@@ -48,7 +48,9 @@ namespace Client.Net
         public void SendData(byte opCode, string username, string data)
         {
             if (!_client.Connected || _stream == null)
-                return;
+            {
+                throw new InvalidOperationException("Client is not connected.");
+            }
             var package = new PackageBuilder();
             package.WriteOpCode(opCode);
             package.WriteString(username);
@@ -80,6 +82,7 @@ namespace Client.Net
                             break;
                     }
                 }
+                throw new InvalidOperationException("Client disconnected.");
             });
         }
 

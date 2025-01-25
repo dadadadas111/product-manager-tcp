@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\learning_material\\PRN222\\ProductManagementApp\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{1FEFD7AD-A6E5-4C94-9355-95B2C3065421}|Client\\Client.csproj|d:\\learning_material\\prn222\\productmanagementapp\\client\\net\\server.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1FEFD7AD-A6E5-4C94-9355-95B2C3065421}|Client\\Client.csproj|solutionrelative:client\\net\\server.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{CE474880-A4AA-489F-9A90-991D728E0B38}|Server\\Server.csproj|d:\\learning_material\\prn222\\productmanagementapp\\server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CE474880-A4AA-489F-9A90-991D728E0B38}|Server\\Server.csproj|solutionrelative:server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -25,10 +29,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{1FEFD7AD-A6E5-4C94-9355-95B2C3065421}|Client\\Client.csproj|d:\\learning_material\\prn222\\productmanagementapp\\client\\mvvm\\view\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1FEFD7AD-A6E5-4C94-9355-95B2C3065421}|Client\\Client.csproj|solutionrelative:client\\mvvm\\view\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1FEFD7AD-A6E5-4C94-9355-95B2C3065421}|Client\\Client.csproj|d:\\learning_material\\prn222\\productmanagementapp\\client\\net\\server.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1FEFD7AD-A6E5-4C94-9355-95B2C3065421}|Client\\Client.csproj|solutionrelative:client\\net\\server.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1FEFD7AD-A6E5-4C94-9355-95B2C3065421}|Client\\Client.csproj|d:\\learning_material\\prn222\\productmanagementapp\\client\\net\\io\\opcode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -70,11 +70,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 11,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "App.xaml.cs",
               "DocumentMoniker": "D:\\learning_material\\PRN222\\ProductManagementApp\\Client\\App.xaml.cs",
               "RelativeDocumentMoniker": "Client\\App.xaml.cs",
@@ -87,7 +87,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "ErrorDialog.xaml.cs",
               "DocumentMoniker": "D:\\learning_material\\PRN222\\ProductManagementApp\\Client\\MVVM\\View\\ErrorDialog.xaml.cs",
               "RelativeDocumentMoniker": "Client\\MVVM\\View\\ErrorDialog.xaml.cs",
@@ -100,7 +100,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "ErrorDialog.xaml",
               "DocumentMoniker": "D:\\learning_material\\PRN222\\ProductManagementApp\\Client\\MVVM\\View\\ErrorDialog.xaml",
               "RelativeDocumentMoniker": "Client\\MVVM\\View\\ErrorDialog.xaml",
@@ -112,7 +112,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "D:\\learning_material\\PRN222\\ProductManagementApp\\Client\\MVVM\\View\\MainWindow.xaml",
               "RelativeDocumentMoniker": "Client\\MVVM\\View\\MainWindow.xaml",
@@ -124,7 +124,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "MainWindow.xaml.cs",
               "DocumentMoniker": "D:\\learning_material\\PRN222\\ProductManagementApp\\Client\\MVVM\\View\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "Client\\MVVM\\View\\MainWindow.xaml.cs",
@@ -174,26 +174,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 0,
               "Title": "Server.cs",
               "DocumentMoniker": "D:\\learning_material\\PRN222\\ProductManagementApp\\Client\\Net\\Server.cs",
               "RelativeDocumentMoniker": "Client\\Net\\Server.cs",
               "ToolTip": "D:\\learning_material\\PRN222\\ProductManagementApp\\Client\\Net\\Server.cs",
               "RelativeToolTip": "Client\\Net\\Server.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAABcAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABwAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-25T09:04:01.473Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\learning_material\\PRN222\\ProductManagementApp\\Server\\Program.cs",
               "RelativeDocumentMoniker": "Server\\Program.cs",
               "ToolTip": "D:\\learning_material\\PRN222\\ProductManagementApp\\Server\\Program.cs",
               "RelativeToolTip": "Server\\Program.cs",
-              "ViewState": "AgIAAF0AAAAAAAAAAAAAAHQAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAAAGgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-25T05:21:14.738Z",
               "EditorCaption": ""
