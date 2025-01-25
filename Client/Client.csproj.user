@@ -7,6 +7,14 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="MVVM\View\ErrorDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="MVVM\View\ErrorDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="MVVM\View\MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>

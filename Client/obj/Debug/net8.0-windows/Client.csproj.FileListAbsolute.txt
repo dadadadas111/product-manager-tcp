@@ -20,3 +20,5 @@ D:\learning_material\PRN222\ProductManagementApp\Client\obj\Debug\net8.0-windows
 D:\learning_material\PRN222\ProductManagementApp\Client\obj\Debug\net8.0-windows\ref\Client.dll
 D:\learning_material\PRN222\ProductManagementApp\Client\obj\Debug\net8.0-windows\GeneratedInternalTypeHelper.g.cs
 D:\learning_material\PRN222\ProductManagementApp\Client\obj\Debug\net8.0-windows\Client.sourcelink.json
+D:\learning_material\PRN222\ProductManagementApp\Client\obj\Debug\net8.0-windows\MVVM\View\ErrorDialog.g.cs
+D:\learning_material\PRN222\ProductManagementApp\Client\obj\Debug\net8.0-windows\MVVM\View\ErrorDialog.baml

@@ -105,7 +105,6 @@ namespace Server
 
         public static void BroadcastDisconnect(string uid)
         {
-            Console.WriteLine("Broadcasting disconnect");
             if (_clients == null)
                 return;
 

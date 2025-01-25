@@ -1,0 +1,34 @@
+﻿<Window x:Class="Client.MVVM.View.ErrorDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client.MVVM.View"
+        mc:Ignorable="d"
+        Title="Error" Height="300" Width="400" WindowStartupLocation="CenterScreen"
+        WindowStyle="None" ResizeMode="NoResize" Background="#282a36">
+    <Grid>
+        <!-- Define Rows: one for the Title Bar and one for the content -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <!-- Title bar height -->
+            <RowDefinition Height="*"/>
+            <!-- Content area -->
+        </Grid.RowDefinitions>
+
+        <!-- Custom Top Bar (Title) -->
+        <Border Grid.Row="0" Background="#44475a" Height="35">
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10" Foreground="#f8f8f2" FontWeight="Bold" FontSize="14">
+                Error
+            </TextBlock>
+        </Border>
+
+        <!-- Scrollable Content for the Error Message -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="10,10,10,50">
+            <TextBlock Name="ErrorMessageText" VerticalAlignment="Top" HorizontalAlignment="Center" TextWrapping="Wrap" Foreground="#f8f8f2" FontSize="14" />
+        </ScrollViewer>
+
+        <!-- Close Button -->
+        <Button Content="Close" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Width="80" Height="35" Background="#ff5555" Foreground="#282a36" BorderBrush="#ff5555" BorderThickness="2" Click="CloseButton_Click"/>
+    </Grid>
+</Window>
