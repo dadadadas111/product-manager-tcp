@@ -41,11 +41,13 @@ namespace Server
 
             try
             {
+                var Ip = "127.0.0.1";
+                var Port = 3000;
                 _clients = new List<Client>();
-                _listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 3000);
+                _listener = new TcpListener(IPAddress.Parse(Ip), Port);
                 _listener.Start();
 
-                _logger.Success("TCP listener started.");
+                _logger.Success($"TCP listener started on {Ip}:{Port}");
                 _logger.Warning("Waiting for connections...");
 
                 while (true)
