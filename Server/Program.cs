@@ -15,6 +15,7 @@ namespace Server
         static TcpListener? _listener;
         static CustomLogger? _logger;
         static List<Client>? _clients;
+        static ApplicationDbContext? _context { get; set; }
 
         static void Main(string[] args)
         {
@@ -32,9 +33,9 @@ namespace Server
                 })
                 .Build();
 
-            var dbContext = host.Services.GetRequiredService<ApplicationDbContext>();
+            _context = host.Services.GetRequiredService<ApplicationDbContext>();
 
-            dbContext.Database.Migrate();
+            _context.Database.Migrate();
 
             _logger.Success("Database migration complete.");
 
@@ -53,6 +54,7 @@ namespace Server
                     _clients.Add(client);
                     BroadcastConnections();
                     BroadcastMessages("[Server]", $"{client.Name} has connected.");
+                    SendAllCategories(client.Uid.ToString());
                 }
             }
             catch (Exception ex)
@@ -126,6 +128,33 @@ namespace Server
             //_logger?.Warning($"Client disconnected. Uid: {uid}, Name: {disconnectedClient.Name}");
             //BroadcastMessages("[Server]", $"{disconnectedClient.Name} has disconnected.");
             //BroadcastConnections();
+        }
+
+        internal static void SendAllCategories(string sender)
+        {
+            if (_clients == null)
+                return;
+
+            var requestClient = _clients.FirstOrDefault(x => x.Uid.ToString() == sender);
+
+            if (requestClient == null)
+                return;
+
+            var categories = _context?.Categories.ToList();
+
+            if (categories == null)
+                return;
+
+            var package = new PackageBuilder();
+            package.WriteOpCode((byte)OpCode.SendCategories);
+            package.WriteString(categories.ToArray().Length.ToString());
+            foreach (var category in categories)
+            {
+                package.WriteString(category.Id.ToString());
+                package.WriteString(category.Name);
+            }
+
+            requestClient.ClientSocket.Client.Send(package.GetPacketBytes());
         }
     }
 }

@@ -3,16 +3,28 @@
   "WorkspaceRootPath": "D:\\learning_material\\PRN222\\ProductManagementApp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1FEFD7AD-A6E5-4C94-9355-95B2C3065421}|Client\\Client.csproj|d:\\learning_material\\prn222\\productmanagementapp\\client\\mvvm\\viewmodel\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1FEFD7AD-A6E5-4C94-9355-95B2C3065421}|Client\\Client.csproj|solutionrelative:client\\mvvm\\viewmodel\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CE474880-A4AA-489F-9A90-991D728E0B38}|Server\\Server.csproj|d:\\learning_material\\prn222\\productmanagementapp\\server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CE474880-A4AA-489F-9A90-991D728E0B38}|Server\\Server.csproj|solutionrelative:server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CE474880-A4AA-489F-9A90-991D728E0B38}|Server\\Server.csproj|d:\\learning_material\\prn222\\productmanagementapp\\server\\client.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CE474880-A4AA-489F-9A90-991D728E0B38}|Server\\Server.csproj|solutionrelative:server\\client.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{1FEFD7AD-A6E5-4C94-9355-95B2C3065421}|Client\\Client.csproj|d:\\learning_material\\prn222\\productmanagementapp\\client\\net\\server.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1FEFD7AD-A6E5-4C94-9355-95B2C3065421}|Client\\Client.csproj|solutionrelative:client\\net\\server.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{1FEFD7AD-A6E5-4C94-9355-95B2C3065421}|Client\\Client.csproj|d:\\learning_material\\prn222\\productmanagementapp\\client\\mvvm\\view\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{1FEFD7AD-A6E5-4C94-9355-95B2C3065421}|Client\\Client.csproj|solutionrelative:client\\mvvm\\view\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1FEFD7AD-A6E5-4C94-9355-95B2C3065421}|Client\\Client.csproj|d:\\learning_material\\prn222\\productmanagementapp\\client\\mvvm\\viewmodel\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1FEFD7AD-A6E5-4C94-9355-95B2C3065421}|Client\\Client.csproj|solutionrelative:client\\mvvm\\viewmodel\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1FEFD7AD-A6E5-4C94-9355-95B2C3065421}|Client\\Client.csproj|d:\\learning_material\\prn222\\productmanagementapp\\client\\mvvm\\model\\categorymodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1FEFD7AD-A6E5-4C94-9355-95B2C3065421}|Client\\Client.csproj|solutionrelative:client\\mvvm\\model\\categorymodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,19 +34,71 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Client.cs",
+              "DocumentMoniker": "D:\\learning_material\\PRN222\\ProductManagementApp\\Server\\Client.cs",
+              "RelativeDocumentMoniker": "Server\\Client.cs",
+              "ToolTip": "D:\\learning_material\\PRN222\\ProductManagementApp\\Server\\Client.cs",
+              "RelativeToolTip": "Server\\Client.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAEEAAABJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-26T13:22:26.318Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\learning_material\\PRN222\\ProductManagementApp\\Server\\Program.cs",
+              "RelativeDocumentMoniker": "Server\\Program.cs",
+              "ToolTip": "D:\\learning_material\\PRN222\\ProductManagementApp\\Server\\Program.cs",
+              "RelativeToolTip": "Server\\Program.cs",
+              "ViewState": "AgIAAH4AAAAAAAAAAAAAAJ0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-26T13:07:17.029Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CategoryModel.cs",
+              "DocumentMoniker": "D:\\learning_material\\PRN222\\ProductManagementApp\\Client\\MVVM\\Model\\CategoryModel.cs",
+              "RelativeDocumentMoniker": "Client\\MVVM\\Model\\CategoryModel.cs",
+              "ToolTip": "D:\\learning_material\\PRN222\\ProductManagementApp\\Client\\MVVM\\Model\\CategoryModel.cs",
+              "RelativeToolTip": "Client\\MVVM\\Model\\CategoryModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-26T12:58:18.841Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "MainViewModel.cs",
               "DocumentMoniker": "D:\\learning_material\\PRN222\\ProductManagementApp\\Client\\MVVM\\ViewModel\\MainViewModel.cs",
               "RelativeDocumentMoniker": "Client\\MVVM\\ViewModel\\MainViewModel.cs",
               "ToolTip": "D:\\learning_material\\PRN222\\ProductManagementApp\\Client\\MVVM\\ViewModel\\MainViewModel.cs",
               "RelativeToolTip": "Client\\MVVM\\ViewModel\\MainViewModel.cs",
-              "ViewState": "AgIAADYAAAAAAAAAAAAAAEMAAAAmAAAAAAAAAA==",
+              "ViewState": "AgIAAEIAAAAAAAAAAAAAAE4AAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-26T11:51:20.412Z",
+              "WhenOpened": "2025-01-26T12:55:49.86Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Server.cs",
+              "DocumentMoniker": "D:\\learning_material\\PRN222\\ProductManagementApp\\Client\\Net\\Server.cs",
+              "RelativeDocumentMoniker": "Client\\Net\\Server.cs",
+              "ToolTip": "D:\\learning_material\\PRN222\\ProductManagementApp\\Client\\Net\\Server.cs",
+              "RelativeToolTip": "Client\\Net\\Server.cs",
+              "ViewState": "AgIAAEsAAAAAAAAAAAAAAFsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-26T12:54:04.505Z",
               "EditorCaption": ""
             },
             {
@@ -51,20 +115,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Client.cs",
-              "DocumentMoniker": "D:\\learning_material\\PRN222\\ProductManagementApp\\Server\\Client.cs",
-              "RelativeDocumentMoniker": "Server\\Client.cs",
-              "ToolTip": "D:\\learning_material\\PRN222\\ProductManagementApp\\Server\\Client.cs",
-              "RelativeToolTip": "Server\\Client.cs",
-              "ViewState": "AgIAACoAAAAAAAAAAAAAADwAAABFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-26T11:49:23.26Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "D:\\learning_material\\PRN222\\ProductManagementApp\\Client\\MVVM\\View\\MainWindow.xaml",
               "RelativeDocumentMoniker": "Client\\MVVM\\View\\MainWindow.xaml",

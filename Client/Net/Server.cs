@@ -14,6 +14,7 @@ namespace Client.Net
         public event Action? OnUserConnect;
         public event Action? OnUserDisconnect;
         public event Action? OnReceiveMessage;
+        public event Action? OnReceiveCategories;
 
         public Server()
         {
@@ -76,6 +77,9 @@ namespace Client.Net
                             break;
                         case OpCode.Disconnect:
                             OnUserDisconnect?.Invoke();
+                            break;
+                        case OpCode.SendCategories:
+                            OnReceiveCategories?.Invoke();
                             break;
                         default:
                             Console.WriteLine($"Unknown OpCode: {opCode}");

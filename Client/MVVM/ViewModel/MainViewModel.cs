@@ -10,6 +10,7 @@ namespace Client.MVVM.ViewModel
     internal class MainViewModel
     {
         public ObservableCollection<UserModel> Users { get; set; }
+        public ObservableCollection<CategoryModel> Categories { get; set; }
         public ObservableCollection<string> Messages { get; set; }
         public RelayCommand ConnectToServerCommand { get; }
         public RelayCommand SendToServerCommand { get; }
@@ -20,6 +21,7 @@ namespace Client.MVVM.ViewModel
         public MainViewModel()
         {
             Users = new ObservableCollection<UserModel>();
+            Categories = new ObservableCollection<CategoryModel>();
             Messages = new ObservableCollection<string>();
 
             Users.Add(new UserModel("Currently Onlines: ", "1234"));
@@ -29,6 +31,7 @@ namespace Client.MVVM.ViewModel
             _server.OnUserConnect += UserConnected;
             _server.OnReceiveMessage += MessageReceived;
             _server.OnUserDisconnect += UserDisconnected;
+            _server.OnReceiveCategories += CategoriesReceived;
             //string guest = GenerateGuestUsername();
 
             ConnectToServerCommand = new RelayCommand(
@@ -71,6 +74,19 @@ namespace Client.MVVM.ViewModel
             var message = _server.PackageReader!.ReadMessage();
             var formattedMessage = $"[{DateTime.Now.ToShortTimeString()}] {sender}: {message}";
             Application.Current.Dispatcher.Invoke(() => Messages.Add(formattedMessage));
+        }
+
+        private void CategoriesReceived()
+        {
+            //throw new System.NotImplementedException();
+            var length = int.Parse(_server.PackageReader!.ReadMessage());
+            for (int i = 0; i < length; i++)
+            {
+                var id = _server.PackageReader!.ReadMessage();
+                var name = _server.PackageReader!.ReadMessage();
+                var category = new CategoryModel(id, name);
+                Application.Current.Dispatcher.Invoke(() => Categories.Add(category));
+            }
         }
 
         private void UserDisconnected()

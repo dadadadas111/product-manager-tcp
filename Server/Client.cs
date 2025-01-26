@@ -1,4 +1,5 @@
 ﻿using Client.Net.IO;
+using Server.Data;
 using Server.Net.IO;
 using System.Net.Sockets;
 
@@ -42,14 +43,25 @@ namespace Server
                     switch (opCode)
                     {
                         case (byte)OpCode.SendMessage:
-                            var sender = _packageReader.ReadMessage();
-                            var message = _packageReader.ReadMessage();
-                            _logger.Log($"Received message from {sender}: {message}");
-                            Program.BroadcastMessages(sender, message);
-                            break;
+                            {
+                                var sender = _packageReader.ReadMessage();
+                                var message = _packageReader.ReadMessage();
+                                _logger.Log($"Message from {sender}: {message}");
+                                Program.BroadcastMessages(sender, message);
+                                break;
+                            }
                         case (byte)OpCode.Disconnect:
-                            _logger.Log("Client disconnected.");
-                            break;
+                            {
+                                _logger.Log("Client disconnected.");
+                                break;
+                            }
+                        case (byte)OpCode.GetAllCategories:
+                            {
+                                var sender = _packageReader.ReadMessage();
+                                _logger.Log($"{sender} requested all categories.");
+                                Program.SendAllCategories(sender);
+                                break;
+                            }
                         default:
                             _logger.Warning($"Unknown opcode: {opCode}");
                             break;
