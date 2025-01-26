@@ -29,10 +29,13 @@ namespace Client.MVVM.ViewModel
             _server.OnUserConnect += UserConnected;
             _server.OnReceiveMessage += MessageReceived;
             _server.OnUserDisconnect += UserDisconnected;
-            string guest = GenerateGuestUsername();
+            //string guest = GenerateGuestUsername();
 
             ConnectToServerCommand = new RelayCommand(
-                _ => _server.Connect("127.0.0.1", 3000, string.IsNullOrWhiteSpace(Username) ? guest : Username));
+                _ => _server.Connect("127.0.0.1", 3000, Username),
+                // username is not empty, and can only contain letters, numbers, and underscores
+                _ => !string.IsNullOrEmpty(Username) && System.Text.RegularExpressions.Regex.IsMatch(Username, @"^[a-zA-Z0-9_]+$")
+                );
 
             SendToServerCommand = new RelayCommand(
                 _ =>
@@ -45,10 +48,10 @@ namespace Client.MVVM.ViewModel
             );
         }
 
-        private static string GenerateGuestUsername()
-        {
-            return $"Guest{new Random().Next(1000, 9999)}";
-        }
+        //private static string GenerateGuestUsername()
+        //{
+        //    return $"Guest{new Random().Next(1000, 9999)}";
+        //}
 
         private void UserConnected()
         {
@@ -66,14 +69,13 @@ namespace Client.MVVM.ViewModel
         {
             var sender = _server.PackageReader!.ReadMessage();
             var message = _server.PackageReader!.ReadMessage();
-            var formattedMessage = $"[{DateTime.Now}] {sender}: {message}";
+            var formattedMessage = $"[{DateTime.Now.ToShortTimeString()}] {sender}: {message}";
             Application.Current.Dispatcher.Invoke(() => Messages.Add(formattedMessage));
         }
 
         private void UserDisconnected()
         {
             var user = Users.FirstOrDefault(x => x.Uid == _server.PackageReader!.ReadMessage());
-            //Application.Current.Dispatcher.Invoke(() => Users.Add(new UserModel("test_disconnect", "1234")));
             if (user != null)
             {
                 Application.Current.Dispatcher.Invoke(() => Users.Remove(user));
