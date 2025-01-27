@@ -33,7 +33,7 @@ namespace Server
             Task.Run(() => Process());
         }
 
-        void Process()
+        async Task Process()
         {
             try
             {
@@ -67,9 +67,21 @@ namespace Server
                             {
                                 var sender = _packageReader.ReadMessage();
                                 var categoryId = _packageReader.ReadMessage();
-                                _logger.Log($"{sender} requested category with id {categoryId}.");
+                                _logger.Log($"{sender} requested products by category id: {categoryId}.");
                                 Program.SendProductsByCategoryId(sender, categoryId);
-                                _logger.Success($"{sender} received category with id {categoryId}.");
+                                _logger.Success($"{sender} received products by category id: {categoryId}.");
+                                break;
+                            }
+                        case (byte)OpCode.AddProduct:
+                            {
+                                var sender = _packageReader.ReadMessage();
+                                var name = _packageReader.ReadMessage();
+                                var price = _packageReader.ReadMessage();
+                                var stock = _packageReader.ReadMessage();
+                                var categoryId = _packageReader.ReadMessage();
+                                _logger.Log($"{sender} requested to add product {name}.");
+                                await Program.AddProduct(sender, name, price, stock, categoryId);
+                                _logger.Success($"{sender} added product {name}.");
                                 break;
                             }
                         default:

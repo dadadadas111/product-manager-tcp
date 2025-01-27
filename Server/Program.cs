@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Server.Models;
 
 namespace Server
 {
@@ -78,6 +79,8 @@ namespace Server
                 _logger?.Warning("TCP listener stopped.");
             }
         }
+
+        // broadcast to all clients
 
         public static void BroadcastConnections()
         {
@@ -190,6 +193,35 @@ namespace Server
             }
             //requestClient.ClientSocket.Client.Send(package.GetPacketBytes());
             requestClient.ClientSocket.GetStream().Write(package.GetPacketBytes(), 0, package.GetPacketBytes().Length);
+        }
+
+        internal static async Task AddProduct(
+            string sender,
+            string name,
+            string price,
+            string stock,
+            string categoryId
+            )
+        {
+            try
+            {
+                if (_clients == null)
+                    return;
+                var requestClient = _clients.FirstOrDefault(x => x.Name == sender);
+                if (requestClient == null)
+                    return;
+                var product = new Product(name, decimal.Parse(price), int.Parse(stock), Guid.Parse(categoryId));
+                await _context?.AddProductAsync(product);
+                _context?.SaveChanges();
+
+                // resend products to the client
+                SendProductsByCategoryId(sender, categoryId);
+                BroadcastMessages("[Server]", $"{sender} added a new product: {name}");
+            }
+            catch (Exception ex)
+            {
+                _logger?.Error(ex.Message);
+            }
         }
     }
 }

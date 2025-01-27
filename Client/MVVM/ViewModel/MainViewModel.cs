@@ -56,7 +56,8 @@ namespace Client.MVVM.ViewModel
         }
 
         public RelayCommand ConnectToServerCommand { get; }
-        public RelayCommand SendToServerCommand { get; }
+        public RelayCommand SendMessageToServerCommand { get; }
+        public RelayCommand AddProductCommand { get; }
         public string? Username { get; set; }
         private readonly Server _server;
         private CategoryModel? _selectedCategory;
@@ -72,6 +73,7 @@ namespace Client.MVVM.ViewModel
 
             Users.Add(new UserModel("Users Online: ", ""));
             Messages.Add("Chat:");
+            SelectedProduct = new ProductModel("", "", 0, 0, "");
 
             _server = new Server();
             _server.OnUserConnect += UserConnected;
@@ -89,7 +91,7 @@ namespace Client.MVVM.ViewModel
                 !_server.IsConnected
                 );
 
-            SendToServerCommand = new RelayCommand(
+            SendMessageToServerCommand = new RelayCommand(
                 _ =>
                 {
                     if (string.IsNullOrWhiteSpace(Message))
@@ -98,6 +100,26 @@ namespace Client.MVVM.ViewModel
                     Message = string.Empty;
                 },
                 _ => !string.IsNullOrEmpty(Username) && !string.IsNullOrWhiteSpace(Message) && _server.IsConnected
+            );
+
+            AddProductCommand = new RelayCommand(
+                _ =>
+                {
+                    if (SelectedCategory == null)
+                        return;
+                    if (SelectedProduct == null)
+                        return;
+                    _server.SendLongData(
+                        (byte)OpCode.AddProduct,
+                        Username,
+                        [
+                            SelectedProduct.Name,
+                            SelectedProduct.Price.ToString(),
+                            SelectedProduct.Stock.ToString(),
+                            SelectedCategory.Id
+                        ]);
+                },
+                _ => SelectedCategory != null && SelectedProduct != null && _server.IsConnected
             );
         }
 
@@ -150,6 +172,7 @@ namespace Client.MVVM.ViewModel
         private void ProductsReceived()
         {
             //throw new System.NotImplementedException();
+            Application.Current.Dispatcher.Invoke(() => Products.Clear());
             var length = int.Parse(_server.PackageReader!.ReadMessage());
             for (int i = 0; i < length; i++)
             {

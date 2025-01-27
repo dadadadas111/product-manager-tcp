@@ -62,6 +62,23 @@ namespace Client.Net
             package.Dispose();
         }
 
+        public void SendLongData(byte opCode, string username, string[] data)
+        {
+            if (!_client.Connected || _stream == null)
+            {
+                throw new InvalidOperationException("Client is not connected.");
+            }
+            var package = new PackageBuilder();
+            package.WriteOpCode(opCode);
+            package.WriteString(username);
+            foreach (var item in data)
+            {
+                package.WriteString(item);
+            }
+            _stream.Write(package.GetPacketBytes(), 0, package.GetPacketBytes().Length);
+            package.Dispose();
+        }
+
         private void ReadPackets()
         {
             Task.Run(() =>

@@ -78,7 +78,7 @@
                                  FontSize="14"
                                  Width="200"/>
                         <Button Content="Send"
-                                Command="{Binding SendToServerCommand}"
+                                Command="{Binding SendMessageToServerCommand}"
                                 Background="#BD93F9"
                                 Foreground="#282A36"
                                 FontSize="14"
@@ -191,7 +191,8 @@
                         Background="#50FA7B"
                         Foreground="#282A36"
                         FontSize="14"
-                        BorderThickness="0"/>
+                        BorderThickness="0"
+                        Command="{Binding AddProductCommand}"/>
                 <Button Content="Edit" Width="75" Margin="5"
                         Background="#FFB86C"
                         Foreground="#282A36"
