@@ -60,6 +60,16 @@ namespace Server
                                 var sender = _packageReader.ReadMessage();
                                 _logger.Log($"{sender} requested all categories.");
                                 Program.SendAllCategories(sender);
+                                _logger.Success($"{sender} received all categories.");
+                                break;
+                            }
+                        case (byte)OpCode.GetProductsByCategory:
+                            {
+                                var sender = _packageReader.ReadMessage();
+                                var categoryId = _packageReader.ReadMessage();
+                                _logger.Log($"{sender} requested category with id {categoryId}.");
+                                Program.SendProductsByCategoryId(sender, categoryId);
+                                _logger.Success($"{sender} received category with id {categoryId}.");
                                 break;
                             }
                         default:

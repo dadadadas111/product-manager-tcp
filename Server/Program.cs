@@ -53,10 +53,17 @@ namespace Server
                 while (true)
                 {
                     var client = new Client(_listener.AcceptTcpClient());
+                    // check name duplication
+                    if (_clients.Exists(x => x.Name == client.Name))
+                    {
+                        _logger.Error($"Client with name {client.Name} already exists. Disconnecting...");
+                        client.ClientSocket.Close();
+                        continue;
+                    }
                     _clients.Add(client);
                     BroadcastConnections();
                     BroadcastMessages("[Server]", $"{client.Name} has connected.");
-                    SendAllCategories(client.Uid.ToString());
+                    SendAllCategories(client.Name);
                 }
             }
             catch (Exception ex)
@@ -137,7 +144,7 @@ namespace Server
             if (_clients == null)
                 return;
 
-            var requestClient = _clients.FirstOrDefault(x => x.Uid.ToString() == sender);
+            var requestClient = _clients.FirstOrDefault(x => x.Name == sender);
 
             if (requestClient == null)
                 return;
@@ -156,7 +163,33 @@ namespace Server
                 package.WriteString(category.Name);
             }
 
-            requestClient.ClientSocket.Client.Send(package.GetPacketBytes());
+            //requestClient.ClientSocket.Client.Send(package.GetPacketBytes());
+            requestClient.ClientSocket.GetStream().Write(package.GetPacketBytes(), 0, package.GetPacketBytes().Length);
+        }
+
+        internal static void SendProductsByCategoryId(string sender, string categoryId)
+        {
+            if (_clients == null)
+                return;
+            var requestClient = _clients.FirstOrDefault(x => x.Name == sender);
+            if (requestClient == null)
+                return;
+            var products = _context?.Products.Where(x => x.CategoryId.ToString() == categoryId).ToList();
+            if (products == null)
+                return;
+            var package = new PackageBuilder();
+            package.WriteOpCode((byte)OpCode.SendProducts);
+            package.WriteString(products.ToArray().Length.ToString());
+            foreach (var product in products)
+            {
+                package.WriteString(product.Id.ToString());
+                package.WriteString(product.Name);
+                package.WriteString(product.Price.ToString());
+                package.WriteString(product.Stock.ToString());
+                package.WriteString(product.CategoryId.ToString());
+            }
+            //requestClient.ClientSocket.Client.Send(package.GetPacketBytes());
+            requestClient.ClientSocket.GetStream().Write(package.GetPacketBytes(), 0, package.GetPacketBytes().Length);
         }
     }
 }

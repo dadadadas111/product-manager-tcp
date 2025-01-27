@@ -10,11 +10,13 @@ namespace Client.Net
         private NetworkStream? _stream;
 
         public PackageReader? PackageReader;
+        public bool IsConnected => false || _client.Connected;
 
         public event Action? OnUserConnect;
         public event Action? OnUserDisconnect;
         public event Action? OnReceiveMessage;
         public event Action? OnReceiveCategories;
+        public event Action? OnReceiveProducts;
 
         public Server()
         {
@@ -80,6 +82,9 @@ namespace Client.Net
                             break;
                         case OpCode.SendCategories:
                             OnReceiveCategories?.Invoke();
+                            break;
+                        case OpCode.SendProducts:
+                            OnReceiveProducts?.Invoke();
                             break;
                         default:
                             Console.WriteLine($"Unknown OpCode: {opCode}");
