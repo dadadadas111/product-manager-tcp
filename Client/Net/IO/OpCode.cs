@@ -30,6 +30,11 @@
         SendProducts = 51,          // Server sends products to the client
         AddProduct = 52,            // Client requests to add a product
         UpdateProduct = 53,         // Client requests to update a product
-        DeleteProduct = 54          // Client requests to delete a product
+        DeleteProduct = 54,         // Client requests to delete a product
+
+        // Product-changes-notify opcodes
+        ProductAdded = 60,          // Server notifies clients that a product was added
+        ProductUpdated = 61,        // Server notifies clients that a product was updated
+        ProductDeleted = 62         // Server notifies clients that a product was deleted
     }
 }

@@ -78,19 +78,21 @@ namespace Server.Data
             return await Products.Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task AddProductAsync(Product product)
+        public async Task<Product?> AddProductAsync(Product product)
         {
             await Products.AddAsync(product);
             await SaveChangesAsync();
+            return product;
         }
 
-        public async Task UpdateProductAsync(Product product)
+        public async Task<Product?> UpdateProductAsync(Product product)
         {
             Products.Update(product);
             await SaveChangesAsync();
+            return product;
         }
 
-        public async Task DeleteProductAsync(Guid id)
+        public async Task<Product?> DeleteProductAsync(Guid id)
         {
             var product = await GetProductByIdAsync(id);
             if (product != null)
@@ -98,6 +100,7 @@ namespace Server.Data
                 Products.Remove(product);
                 await SaveChangesAsync();
             }
+            return product;
         }
     }
 }

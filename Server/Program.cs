@@ -142,7 +142,27 @@ namespace Server
             //BroadcastConnections();
         }
 
-        internal static void SendAllCategories(string sender)
+        public static void BroadcastProductChanges(Product product, OpCode opCode)
+        {
+            if (_clients == null)
+                return;
+            foreach (var client in _clients)
+            {
+                var broadcastPackage = new PackageBuilder();
+                broadcastPackage.WriteOpCode((byte)opCode);
+                broadcastPackage.WriteString(product.Id.ToString());
+                if (opCode != OpCode.ProductDeleted)
+                {
+                    broadcastPackage.WriteString(product.Name);
+                    broadcastPackage.WriteString(product.Price.ToString());
+                    broadcastPackage.WriteString(product.Stock.ToString());
+                    broadcastPackage.WriteString(product.CategoryId.ToString());
+                }
+                client.ClientSocket.Client.Send(broadcastPackage.GetPacketBytes());
+            }
+        }
+
+        internal static async Task SendAllCategories(string sender)
         {
             if (_clients == null)
                 return;
@@ -152,7 +172,8 @@ namespace Server
             if (requestClient == null)
                 return;
 
-            var categories = _context?.Categories.ToList();
+            //var categories = _context?.Categories.ToList();
+            var categories = await _context?.GetAllCategoriesAsync();
 
             if (categories == null)
                 return;
@@ -170,14 +191,15 @@ namespace Server
             requestClient.ClientSocket.GetStream().Write(package.GetPacketBytes(), 0, package.GetPacketBytes().Length);
         }
 
-        internal static void SendProductsByCategoryId(string sender, string categoryId)
+        internal static async Task SendProductsByCategoryId(string sender, string categoryId)
         {
             if (_clients == null)
                 return;
             var requestClient = _clients.FirstOrDefault(x => x.Name == sender);
             if (requestClient == null)
                 return;
-            var products = _context?.Products.Where(x => x.CategoryId.ToString() == categoryId).ToList();
+            //var products = _context?.Products.Where(x => x.CategoryId.ToString() == categoryId).ToList();
+            var products = await _context?.GetProductsByCategoryIdAsync(Guid.Parse(categoryId));
             if (products == null)
                 return;
             var package = new PackageBuilder();
@@ -211,12 +233,70 @@ namespace Server
                 if (requestClient == null)
                     return;
                 var product = new Product(name, decimal.Parse(price), int.Parse(stock), Guid.Parse(categoryId));
-                await _context?.AddProductAsync(product);
-                _context?.SaveChanges();
-
-                // resend products to the client
-                SendProductsByCategoryId(sender, categoryId);
+                var addedProduct = await _context?.AddProductAsync(product);
+                if (addedProduct == null)
+                    return;
+                //await SendProductsByCategoryId(sender, categoryId);
+                BroadcastProductChanges(addedProduct, OpCode.ProductAdded);
                 BroadcastMessages("[Server]", $"{sender} added a new product: {name}");
+            }
+            catch (Exception ex)
+            {
+                _logger?.Error(ex.Message);
+            }
+        }
+
+        internal static async Task DeleteProduct(string sender, string productId)
+        {
+            try
+            {
+                if (_clients == null)
+                    return;
+                var requestClient = _clients.FirstOrDefault(x => x.Name == sender);
+                if (requestClient == null)
+                    return;
+                var deletedProduct = await _context?.DeleteProductAsync(Guid.Parse(productId));
+                if (deletedProduct == null)
+                    return;
+                //await SendProductsByCategoryId(sender, deletedProduct.CategoryId.ToString());
+                BroadcastProductChanges(deletedProduct, OpCode.ProductDeleted);
+                BroadcastMessages("[Server]", $"{sender} deleted a product: {deletedProduct.Name}");
+            }
+            catch (Exception ex)
+            {
+                _logger?.Error(ex.Message);
+            }
+        }
+
+        internal static async Task UpdateProduct(
+            string sender,
+            string productId,
+            string name,
+            string price,
+            string stock,
+            string categoryId
+            )
+        {
+            try
+            {
+                if (_clients == null)
+                    return;
+                var requestClient = _clients.FirstOrDefault(x => x.Name == sender);
+                if (requestClient == null)
+                    return;
+                var product = await _context?.GetProductByIdAsync(Guid.Parse(productId));
+                if (product == null)
+                    return;
+                product.Name = name;
+                product.Price = decimal.Parse(price);
+                product.Stock = int.Parse(stock);
+                product.CategoryId = Guid.Parse(categoryId);
+                var updatedProduct = await _context?.UpdateProductAsync(product);
+                if (updatedProduct == null)
+                    return;
+                //await SendProductsByCategoryId(sender, updatedProduct.CategoryId.ToString());
+                BroadcastProductChanges(updatedProduct, OpCode.ProductUpdated);
+                BroadcastMessages("[Server]", $"{sender} updated a product: {name}");
             }
             catch (Exception ex)
             {

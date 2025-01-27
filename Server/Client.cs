@@ -30,7 +30,7 @@ namespace Server
                 _logger.Log($"Client connected. Uid: {Uid}, Name: {Name}");
             }
 
-            Task.Run(() => Process());
+            Task.Run(Process);
         }
 
         async Task Process()
@@ -39,6 +39,7 @@ namespace Server
             {
                 while (ClientSocket.Connected && _packageReader != null)
                 {
+                    _packageReader = new PackageReader(ClientSocket.GetStream());
                     var opCode = _packageReader.ReadByte();
                     switch (opCode)
                     {
@@ -82,6 +83,28 @@ namespace Server
                                 _logger.Log($"{sender} requested to add product {name}.");
                                 await Program.AddProduct(sender, name, price, stock, categoryId);
                                 _logger.Success($"{sender} added product {name}.");
+                                break;
+                            }
+                        case (byte)OpCode.UpdateProduct:
+                            {
+                                var sender = _packageReader.ReadMessage();
+                                var id = _packageReader.ReadMessage();
+                                var name = _packageReader.ReadMessage();
+                                var price = _packageReader.ReadMessage();
+                                var stock = _packageReader.ReadMessage();
+                                var categoryId = _packageReader.ReadMessage();
+                                _logger.Log($"{sender} requested to update product {name}.");
+                                await Program.UpdateProduct(sender, id, name, price, stock, categoryId);
+                                _logger.Success($"{sender} updated product {name}.");
+                                break;
+                            }
+                        case (byte)OpCode.DeleteProduct:
+                            {
+                                var sender = _packageReader.ReadMessage();
+                                var id = _packageReader.ReadMessage();
+                                _logger.Log($"{sender} requested to delete product id: {id}.");
+                                await Program.DeleteProduct(sender, id);
+                                _logger.Success($"{sender} deleted product id: {id}.");
                                 break;
                             }
                         default:

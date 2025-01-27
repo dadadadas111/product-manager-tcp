@@ -12,11 +12,19 @@ namespace Client.Net
         public PackageReader? PackageReader;
         public bool IsConnected => false || _client.Connected;
 
+        // events on User changes
         public event Action? OnUserConnect;
         public event Action? OnUserDisconnect;
+
+        // common events
         public event Action? OnReceiveMessage;
         public event Action? OnReceiveCategories;
         public event Action? OnReceiveProducts;
+
+        // events on Product changes
+        public event Action? OnProductAdded;
+        public event Action? OnProductRemoved;
+        public event Action? OnProductUpdated;
 
         public Server()
         {
@@ -83,8 +91,9 @@ namespace Client.Net
         {
             Task.Run(() =>
             {
-                while (_client.Connected)
+                while (_client.Connected && _stream != null)
                 {
+                    PackageReader = new PackageReader(_stream);
                     var opCode = PackageReader!.ReadByte();
                     switch ((OpCode)opCode)
                     {
@@ -102,6 +111,15 @@ namespace Client.Net
                             break;
                         case OpCode.SendProducts:
                             OnReceiveProducts?.Invoke();
+                            break;
+                        case OpCode.ProductAdded:
+                            OnProductAdded?.Invoke();
+                            break;
+                        case OpCode.ProductDeleted:
+                            OnProductRemoved?.Invoke();
+                            break;
+                        case OpCode.ProductUpdated:
+                            OnProductUpdated?.Invoke();
                             break;
                         default:
                             Console.WriteLine($"Unknown OpCode: {opCode}");

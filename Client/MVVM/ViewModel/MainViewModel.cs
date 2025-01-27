@@ -37,7 +37,7 @@ namespace Client.MVVM.ViewModel
             {
                 if (_selectedProduct != value && value != null)
                 {
-                    _selectedProduct = value;
+                    _selectedProduct = new ProductModel(value.Id, value.Name, value.Price, value.Stock, value.CategoryId);
                     OnPropertyChanged(nameof(SelectedProduct));
                 }
             }
@@ -58,6 +58,8 @@ namespace Client.MVVM.ViewModel
         public RelayCommand ConnectToServerCommand { get; }
         public RelayCommand SendMessageToServerCommand { get; }
         public RelayCommand AddProductCommand { get; }
+        public RelayCommand DeleteProductCommand { get; }
+        public RelayCommand UpdateProductCommand { get; }
         public string? Username { get; set; }
         private readonly Server _server;
         private CategoryModel? _selectedCategory;
@@ -81,6 +83,9 @@ namespace Client.MVVM.ViewModel
             _server.OnUserDisconnect += UserDisconnected;
             _server.OnReceiveCategories += CategoriesReceived;
             _server.OnReceiveProducts += ProductsReceived;
+            _server.OnProductAdded += ProductsAdded;
+            _server.OnProductRemoved += ProductDeleted;
+            _server.OnProductUpdated += ProductUpdated;
             //string guest = GenerateGuestUsername();
 
             ConnectToServerCommand = new RelayCommand(
@@ -109,6 +114,8 @@ namespace Client.MVVM.ViewModel
                         return;
                     if (SelectedProduct == null)
                         return;
+                    if (!IsValidProduct())
+                        return;
                     _server.SendLongData(
                         (byte)OpCode.AddProduct,
                         Username,
@@ -121,6 +128,43 @@ namespace Client.MVVM.ViewModel
                 },
                 _ => SelectedCategory != null && SelectedProduct != null && _server.IsConnected
             );
+
+            DeleteProductCommand = new RelayCommand(
+                _ =>
+                {
+                    var confirm = MessageBox.Show("Are you sure you want to delete this product?", "Delete Product", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if (confirm == MessageBoxResult.No)
+                        return;
+                    if (SelectedProduct == null || SelectedProduct.Id == null)
+                        return;
+                    _server.SendData((byte)OpCode.DeleteProduct, Username, SelectedProduct.Id);
+                },
+                _ => !(SelectedProduct == null || SelectedProduct.Id == null) && _server.IsConnected
+            );
+
+            UpdateProductCommand = new RelayCommand(
+                _ =>
+                {
+                    if (SelectedCategory == null)
+                        return;
+                    if (SelectedProduct == null)
+                        return;
+                    if (!IsValidProduct())
+                        return;
+                    _server.SendLongData(
+                        (byte)OpCode.UpdateProduct,
+                        Username,
+                        [
+                            SelectedProduct.Id,
+                            SelectedProduct.Name,
+                            SelectedProduct.Price.ToString(),
+                            SelectedProduct.Stock.ToString(),
+                            SelectedProduct.CategoryId
+                        ]);
+                },
+                _ => !(SelectedProduct == null || SelectedProduct.Id == null) && _server.IsConnected
+            );
+
         }
 
         // events from the client
@@ -184,6 +228,71 @@ namespace Client.MVVM.ViewModel
                 var product = new ProductModel(id, name, price, stock, categoryId);
                 Application.Current.Dispatcher.Invoke(() => Products.Add(product));
             }
+        }
+
+        private void ProductsAdded()
+        {
+            //throw new System.NotImplementedException();
+            var id = _server.PackageReader!.ReadMessage();
+            var name = _server.PackageReader!.ReadMessage();
+            var price = decimal.Parse(_server.PackageReader!.ReadMessage());
+            var stock = int.Parse(_server.PackageReader!.ReadMessage());
+            var categoryId = _server.PackageReader!.ReadMessage();
+            if (SelectedCategory == null || SelectedCategory.Id != categoryId)
+                return;
+            var product = new ProductModel(id, name, price, stock, categoryId);
+            //SyncSelectedProduct(product);
+            Application.Current.Dispatcher.Invoke(() => Products.Add(product));
+        }
+
+        private void ProductDeleted()
+        {
+            //throw new System.NotImplementedException();
+            var id = _server.PackageReader!.ReadMessage();
+            var product = Products.FirstOrDefault(x => x.Id == id);
+            if (product != null)
+            {
+                //SyncSelectedProduct(new ProductModel());
+                Application.Current.Dispatcher.Invoke(() => Products.Remove(product));
+            }
+        }
+
+        private void ProductUpdated()
+        {
+            //throw new System.NotImplementedException();
+            var id = _server.PackageReader!.ReadMessage();
+            var name = _server.PackageReader!.ReadMessage();
+            var price = decimal.Parse(_server.PackageReader!.ReadMessage());
+            var stock = int.Parse(_server.PackageReader!.ReadMessage());
+            var categoryId = _server.PackageReader!.ReadMessage();
+            var product = Products.FirstOrDefault(x => x.Id == id);
+            if (product != null)
+            {
+                var updatedProduct = new ProductModel(id, name, price, stock, categoryId);
+                //SyncSelectedProduct(updatedProduct);
+                Application.Current.Dispatcher.Invoke(() => Products[Products.IndexOf(product)] = updatedProduct);
+                SelectedProduct = updatedProduct;
+            }
+        }
+
+        private bool IsValidProduct()
+        {
+            if (string.IsNullOrEmpty(SelectedProduct!.Name))
+            {
+                MessageBox.Show("Product name cannot be empty.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+            if (SelectedProduct!.Price <= 0)
+            {
+                MessageBox.Show("Price must be greater than 0.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+            if (SelectedProduct!.Stock < 0)
+            {
+                MessageBox.Show("Stock must be greater than or equal to 0.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+            return true;
         }
 
         private void UserDisconnected()

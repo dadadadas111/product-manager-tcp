@@ -14,6 +14,8 @@ namespace Client.MVVM.Model
         public int Stock { get; set; }
         public string CategoryId { get; set; }
 
+        public ProductModel() : this("", "", 0, 0, "") { }
+
         public ProductModel( string id, string name, decimal price, int stock, string categoryId)
         {
             Id = id;

@@ -158,7 +158,7 @@
 
             <StackPanel Margin="10">
                 <TextBlock Text="Product Name:" Margin="0,5,0,5"/>
-                <TextBox 
+                <TextBox x:Name="NameTxt" 
                     Text="{Binding SelectedProduct.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Height="30" 
                     Width="300" 
@@ -167,8 +167,8 @@
                     BorderBrush="#BD93F9" 
                     FontSize="14"/>
                 <TextBlock Text="Price:" Margin="0,10,0,5"/>
-                <TextBox 
-                    Text="{Binding SelectedProduct.Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                <TextBox x:Name="PriceTxt" 
+                    Text="{Binding SelectedProduct.Price, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                     Height="30" 
                     Width="300" 
                     Background="#6272A4" 
@@ -176,7 +176,7 @@
                     BorderBrush="#BD93F9" 
                     FontSize="14"/>
                 <TextBlock Text="Stock:" Margin="0,10,0,5"/>
-                <TextBox 
+                <TextBox x:Name="StockTxt" 
                     Text="{Binding SelectedProduct.Stock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Height="30" 
                     Width="300" 
@@ -197,12 +197,14 @@
                         Background="#FFB86C"
                         Foreground="#282A36"
                         FontSize="14"
-                        BorderThickness="0"/>
-                <Button Content="Delete" Width="75" Margin="5"
+                        BorderThickness="0"
+                        Command="{Binding UpdateProductCommand}"/>
+                <Button x:Name="DeleteButton" Content="Delete" Width="75" Margin="5"
                         Background="#FF5555"
-                        Foreground="#F8F8F2"
+                        Foreground="#282A36"
                         FontSize="14"
-                        BorderThickness="0"/>
+                        BorderThickness="0"
+                        Command="{Binding DeleteProductCommand}"/>
             </StackPanel>
         </StackPanel>
     </Grid>
