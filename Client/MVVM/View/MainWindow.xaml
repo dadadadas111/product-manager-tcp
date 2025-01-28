@@ -16,6 +16,11 @@
         <viewmodel:MainViewModel/>
     </Window.DataContext>
 
+    <Window.Resources>
+        <local:WidthReducerConverter x:Key="WidthReducerConverter"/>
+    </Window.Resources>
+
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="280" MinWidth="250" MaxWidth="500"/>
@@ -62,10 +67,16 @@
                               BorderBrush="#6272A4"
                               FontSize="14"
                               Height="275"
-                              Margin="0,0,0,10">
+                              Margin="0,0,0,10"
+                              Name="ChatListView">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Width="245" Text="{Binding}" TextWrapping="Wrap" Margin="0,5,0,5"/>
+                                <TextBlock 
+                                    x:Name="ChatItem" 
+                                    Width="{Binding ActualWidth, ElementName=ChatListView, Converter={StaticResource WidthReducerConverter}}"
+                                    Text="{Binding}" 
+                                    TextWrapping="Wrap" 
+                                    Margin="0,0,0,0"/>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
