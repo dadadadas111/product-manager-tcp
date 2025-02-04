@@ -60,7 +60,7 @@ namespace Server
                             {
                                 var sender = _packageReader.ReadMessage();
                                 _logger.Log($"{sender} requested all categories.");
-                                Program.SendAllCategories(sender);
+                                await Program.SendAllCategories(sender);
                                 _logger.Success($"{sender} received all categories.");
                                 break;
                             }
@@ -69,7 +69,7 @@ namespace Server
                                 var sender = _packageReader.ReadMessage();
                                 var categoryId = _packageReader.ReadMessage();
                                 _logger.Log($"{sender} requested products by category id: {categoryId}.");
-                                Program.SendProductsByCategoryId(sender, categoryId);
+                                await Program.SendProductsByCategoryId(sender, categoryId);
                                 _logger.Success($"{sender} received products by category id: {categoryId}.");
                                 break;
                             }
